@@ -26,7 +26,7 @@ jobs:
         run: echo this will not be executed because aBoolean is always false as defined
 
       - name: test contains
-        if: ${{ containse(env.aString, 'this') }}
+        if: ${{ contains(env.aString, 'this') }}
         run: |
           echo "this will be executed becasue aString has this"
           echos "this won't be executed"
