@@ -1,13 +1,57 @@
 name: variables and secrets
 
 env:
-  WF_VAR: 'workflow level variable'
-  
+  WF_VAR: 'workflow level variable' 
+
 on:
   push:
 
 jobs:
+  testing_expressions:
+    name: job to test expressions
+    runs-on: ubuntu-latest
+    env:
+      aBoolean: ${{ false }}
+      aNull: ${{ null }}
+      aNumber: ${{ 42 }}
+      aString: This is a string
+    
+    steps:
+      - name: test null
+        if: (env.aNull == null)
+        run: echo this variable is null
+
+      - name: test boolean
+        if: ${{ fromJSON(env.aBoolean) }}
+        run: echo this will not be executed because aBoolean is always false as defined
+
+      - name: test contains
+        if: ${{ containse(env.aString, 'this') }}
+        run: |
+          echo "this will be executed becasue aString has this"
+          echos "this won't be executed"
+
+      - name: test status check like the above failure case, AND format function
+        if: ${{ failure() }}
+        env: 
+          FORMAT_VAR: ${{ format('GitHub {0} {1} {2}', 'actions','is','awesome') }}
+        run : |
+            echo " this step runs a special script to clean up after the failed step"
+            echo ${{ env.FORMAT_VAR }}
+            
+      - name: function and always status check
+        if: ${{ startsWith(env.aString, 'this') && always() }}
+        run: sleep 60
+
+      - name: test cancel status check
+        if: ${{ cancelled() }}
+        run: echo "this job is executed if the above workflow is cancelled"
+        
+ 
+    
   test_variables:
+    if: (github.event_name == 'pull request')
+    name: job to test varialbes
     runs-on: ubuntu-latest
     env:
       JOB_VAR: "Job level variable"
