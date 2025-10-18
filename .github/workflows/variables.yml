@@ -5,11 +5,11 @@ env:
 
 on:
   push:
-  workflow_dispatch:
+  
 jobs:
   testing_expressions:
     name: job to test expressions
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     env:
       aBoolean: ${{ false }}
       aNull: ${{ null }}
