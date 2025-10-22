@@ -1,2 +1,4 @@
-grpcio == 1.7
-catboost==1.4
+grpcio == 1.76.0
+catboost == 1.2.8
+torch== 2.9.0
+lalsuite==7.26.1
