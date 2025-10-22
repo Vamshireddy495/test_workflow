@@ -10,7 +10,6 @@ jobs:
     steps:
       - name: list files
         run: ls
-      - name: check-out repo
       - name: Checkout
         uses: actions/checkout@v5.0.0
       - name: list files now
@@ -22,7 +21,7 @@ jobs:
         with:
           who-to-greet: "VR!"
       - name: time
-        run: echo"'greet time:'${{ steps.hello-world.output.time }}"
+        run: echo "'greet time:'${{ steps.hello-world.outputs.time }}"
 
       - name: hello world from docker
         uses: docker://hello-world:latest
