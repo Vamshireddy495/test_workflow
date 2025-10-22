@@ -1,0 +1,31 @@
+name: actions
+
+on: 
+  push:
+
+jobs:
+  test-actions:
+    name: test-action
+    runs-on: ubuntu-latest
+    steps:
+      - name: list files
+        run: ls
+      - name: check-out repo
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
+      - name: list files now
+        run: ls
+        
+      - name: Print Hello-World!
+        id: hello-world
+        uses: actions/hello-world-javascript-action@main
+        with:
+          who-to-greet: "VR!"
+      - name: time
+        run: echo"'greet time:'${{ steps.hello-world.output.time }}"
+
+      - name: hello world from docker
+        uses: docker://hello-world:latest
+      
+      
+          
